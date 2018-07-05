@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <layer-list xmlns:android="http://schemas.android.com/apk/res/android" android:layout_height="match_parent" android:layout_width="match_parent">
+
+        <item android:drawable="@color/colorPrimary"/>
+
+        <!-- Set the Background Image-->
+        <item android:gravity="center">
+            <bitmap
+                android:gravity="fill_horizontal|fill_vertical"
+                app:srcCompat="@drawable/ic_logo_app"/>
+        </item>
+    </layer-list>
+
+</selector>
