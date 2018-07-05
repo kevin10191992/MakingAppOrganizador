@@ -1,6 +1,8 @@
 package com.making.apps.organizador;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AlertDialog;
@@ -133,7 +135,12 @@ public class MainActivity extends AppCompatActivity {
                         nuevo_user.setNombre(usuariobd);
                         nuevo_user.setClave(clavebd);
 
+                        SharedPreferences.Editor editor = getSharedPreferences("sesion", Context.MODE_PRIVATE).edit();
+                        editor.putInt("id_usuario", id_usuario);
+                        editor.apply();
+
                         startActivity(new Intent(this, TareasActivity.class));
+
                     } else {
                         Toast.makeText(getApplicationContext(), R.string.text_error_sesion, Toast.LENGTH_SHORT).show();
                     }
