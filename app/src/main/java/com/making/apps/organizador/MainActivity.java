@@ -78,8 +78,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String usuarior = usuarioreg.getText().toString();
                 String claver = clavereg.getText().toString();
-                if (claver.length() >= 8) {
-                    if (!usuarior.isEmpty() && !claver.isEmpty()) {
+                if (!usuarior.isEmpty() && !claver.isEmpty()) {
+                    if (claver.length() >= 8) {
                         try {
                             //valida si usuario existe en BD
                             if (!baseDatos.existeEnBd(usuarior)) {
@@ -98,11 +98,12 @@ public class MainActivity extends AppCompatActivity {
 
 
                     } else {
-                        Toast.makeText(view.getContext(), R.string.text_complete_todo, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(view.getContext(), R.string.text_longitud_minima, Toast.LENGTH_SHORT).show();
                     }
 
                 } else {
-                    Toast.makeText(view.getContext(), R.string.text_longitud_minima, Toast.LENGTH_SHORT).show();
+
+                    Toast.makeText(view.getContext(), R.string.text_complete_todo, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -126,7 +127,6 @@ public class MainActivity extends AppCompatActivity {
                 //valida si usuario existe en BD
                 if (baseDatos.existeEnBd(usuariobd)) {
                     id_usuario = baseDatos.loginBD(usuariobd, clavebd);
-                    Log.e("en", "si existe " + id_usuario);
                     if (id_usuario > -1) {
                         com.making.apps.organizador.pojos.usuario nuevo_user = new usuario();
                         nuevo_user.setId(id_usuario);
@@ -143,6 +143,8 @@ public class MainActivity extends AppCompatActivity {
             } catch (Exception e) {
                 Log.e("error", e.toString());
             }
+        } else {
+            Toast.makeText(getApplicationContext(), R.string.text_complete_todo, Toast.LENGTH_SHORT).show();
         }
 
     }
