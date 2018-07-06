@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 public class SplashActivity extends AppCompatActivity {
 
@@ -14,11 +13,10 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_activity);
-        final SharedPreferences prefs = getSharedPreferences("sesion", Context.MODE_PRIVATE);
 
-        if (prefs != null) {
-            int id_usuario = prefs.getInt("id_usuario", -1);
-            Log.e("s", "id usua" + id_usuario);
+        SharedPreferences getPrefs = getApplicationContext().getSharedPreferences(getString(R.string.shared_sesion), Context.MODE_PRIVATE);
+        if (getPrefs != null) {
+            int id_usuario = getPrefs.getInt(getString(R.string.shared_id_usuario), -1);
             if (id_usuario > -1) {
                 new Handler().postDelayed(new Runnable() {
                     @Override
@@ -28,8 +26,15 @@ public class SplashActivity extends AppCompatActivity {
                 }, 1000);
 
             } else {
-                Intent i = new Intent(SplashActivity.this, MainActivity.class);
-                startActivity(i);
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent i = new Intent(SplashActivity.this, MainActivity.class);
+                        startActivity(i);
+                    }
+                }, 1000);
+
+
             }
 
         }

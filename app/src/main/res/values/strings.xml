@@ -18,6 +18,11 @@
     <string name="text_longitud_minima">Longitud minima 8 caracteres</string>
 
 
+    <!-- Strings related to Shared preferences login -->
+    <string name="shared_id_usuario">id_usuario</string>
+    <string name="shared_sesion">sesion</string>
+
+
     <string name="title_activity_scrolling">ScrollingActivity</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"

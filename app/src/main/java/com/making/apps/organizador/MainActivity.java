@@ -135,11 +135,14 @@ public class MainActivity extends AppCompatActivity {
                         nuevo_user.setNombre(usuariobd);
                         nuevo_user.setClave(clavebd);
 
-                        SharedPreferences.Editor editor = getSharedPreferences("sesion", Context.MODE_PRIVATE).edit();
+
+                        SharedPreferences.Editor editor = getApplicationContext().getSharedPreferences("sesion", Context.MODE_PRIVATE).edit();
                         editor.putInt("id_usuario", id_usuario);
                         editor.apply();
+                        editor.commit();
 
                         startActivity(new Intent(this, TareasActivity.class));
+                        this.finish();
 
                     } else {
                         Toast.makeText(getApplicationContext(), R.string.text_error_sesion, Toast.LENGTH_SHORT).show();
