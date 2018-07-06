@@ -15,6 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:animateLayoutChanges="true"
+
         android:paddingBottom="16dp"
         app:layout_optimizationLevel="standard|dimensions|chains"
         tools:context=".MainActivity">
@@ -102,31 +103,28 @@
 
         <Button
             android:id="@+id/boton_login"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="wrap_content"
+            style="@style/boton_colored_flat"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="8dp"
-            android:layout_weight="1"
-            android:paddingBottom="12dp"
-            android:paddingTop="12dp"
+            android:layout_margin="8dp"
             android:text="@string/login_text"
             android:textSize="@dimen/text_size_grande"
             app:layout_constraintEnd_toStartOf="@+id/boton_registro"
             app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout_clave" />
 
         <Button
             android:id="@+id/boton_registro"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="wrap_content"
+            style="@style/boton_border_flat"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="8dp"
-            android:layout_weight="1"
-            android:paddingBottom="12dp"
-            android:paddingTop="12dp"
+            android:layout_margin="8dp"
+            android:background="@drawable/bt_boton_borde"
+            android:foreground="?selectableItemBackground"
             android:text="@string/texto_login_registrarse"
             android:textSize="@dimen/text_size_grande"
             app:layout_constraintEnd_toEndOf="parent"
@@ -135,30 +133,40 @@
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout_clave" />
 
 
-        <Button
-            android:id="@+id/boton_login_facebook"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="80dp"
-            android:backgroundTint="@color/facebook_color"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="@string/texot_iniciar_con"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/boton_login" />
+
+        <Button
+            android:id="@+id/boton_login_facebook"
+            style="@style/boton_facebook_flat"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="48dp"
+            android:layout_marginLeft="48dp"
+            android:layout_marginRight="48dp"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="8dp"
             android:foreground="@android:color/transparent"
             android:gravity="center"
-            android:paddingBottom="12dp"
-            android:paddingLeft="40dp"
-            android:paddingRight="40dp"
-            android:paddingTop="12dp"
             android:text="@string/texto_login_facebook"
             android:textSize="@dimen/text_size_grande"
             android:theme="@style/Widget.AppCompat.Button.Colored"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout_clave" />
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
 
 
     </android.support.constraint.ConstraintLayout>

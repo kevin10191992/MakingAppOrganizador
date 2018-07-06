@@ -26,7 +26,7 @@ public class BD extends SQLiteOpenHelper {
 
     private Context context;
 
-    public BD(Context context) {
+    BD(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
         this.context = context;
     }
@@ -76,10 +76,7 @@ public class BD extends SQLiteOpenHelper {
                 contador = c.getInt(0);
                 c.close();
                 db.close();
-                if (contador > 0) {
-                    //si existe
-                    return true;
-                }
+                return contador > 0;
             }
         }
 ///si no existe retorna falso
@@ -97,13 +94,12 @@ public class BD extends SQLiteOpenHelper {
         String sclavebd = null;
         try {
             sclavebd = seguridad.get_SHA_512_SecurePassword(clave, usuario);
-            Log.e("en", "clave digitada convertida " + sclavebd.toString());
         } catch (Exception e) {
             Log.e("error", e.toString());
         }
 
         int id = -1;
-        String clavebd = "";
+        String clavebd;
         SQLiteDatabase db = this.getReadableDatabase();
         if (db.isOpen()) {
             Cursor c = db.rawQuery("select * from usuarios where nombre='" + usuario + "' and clave='" + sclavebd + "'", null);
@@ -135,7 +131,6 @@ public class BD extends SQLiteOpenHelper {
             Log.e("en", e.toString());
         }
 
-        Log.e("en", "clave insertada " + clavs);
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues datos = new ContentValues();
         datos.put(DB_COLUMNA_USUARIOS_NOMBRE, usuario);
