@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp">
+    android:padding="16dp">
 
 
     <TextView
@@ -23,10 +23,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,7 +34,6 @@
             android:id="@+id/reg_usuario"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_group_black_24dp"
             android:drawablePadding="8dp"
             android:drawableStart="@drawable/ic_group_black_24dp"
             android:hint="@string/texto_usuario_login"
@@ -63,7 +60,6 @@
             android:id="@+id/reg_clave"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_vpn_key_black_24dp"
             android:drawablePadding="8dp"
             android:drawableStart="@drawable/ic_vpn_key_black_24dp"
             android:hint="@string/texto_clave_login"
@@ -75,15 +71,16 @@
 
     <Button
         android:id="@+id/boton_registro"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="wrap_content"
+        style="@style/boton_colored_flat"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:layout_weight="1"
+        android:layout_marginEnd="64dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="16dp"
         android:text="@string/texto_login_registrarse"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout3" />
+
 
 </android.support.constraint.ConstraintLayout>
