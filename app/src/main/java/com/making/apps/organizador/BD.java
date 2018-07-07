@@ -7,6 +7,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.making.apps.organizador.pojos.tareas;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class BD extends SQLiteOpenHelper {
 
     //General
@@ -20,9 +25,9 @@ public class BD extends SQLiteOpenHelper {
 
     private static final String DB_TABLA_TAREAS = "tareas";
     private static final String DB_COLUMNA_TAREAS_ID = "id";
-    private static final String DB_COLUMNA_TAREAS_ID_USUARIO = "id_uduario";
+    private static final String DB_COLUMNA_TAREAS_ID_USUARIO = "id_usuario";
     private static final String DB_COLUMNA_TAREAS_NOMBRE = "nombre";
-    private static final String DB_COLUMNA_TAREAS_DESCRIPCION = "descripion";
+    private static final String DB_COLUMNA_TAREAS_DESCRIPCION = "descripcion";
     private static final String DB_COLUMNA_TAREAS_ESTADO = "estado";
 
     private Context context;
@@ -43,9 +48,9 @@ public class BD extends SQLiteOpenHelper {
                 DB_COLUMNA_TAREAS_DESCRIPCION + " TEXT, " +
                 DB_COLUMNA_TAREAS_ESTADO + " TEXT);");
 
-        sqLiteDatabase.execSQL("CREATE INDEX `index_tareas` ON `tareas` (`id`,`estado`);");
-        sqLiteDatabase.execSQL("CREATE INDEX `index_tareas` ON `tareas` (`id`,`id_usuario`);");
-        sqLiteDatabase.execSQL("CREATE INDEX `index_tareas` ON `tareas` (`id_usuario`,`estado`);");
+        sqLiteDatabase.execSQL("CREATE INDEX `index_tareas1` ON `tareas` (`id`,`estado`);");
+        sqLiteDatabase.execSQL("CREATE INDEX `index_tareas2` ON `tareas` (`id`,`id_usuario`);");
+        sqLiteDatabase.execSQL("CREATE INDEX `index_tareas3` ON `tareas` (`id_usuario`,`estado`);");
 
         //tabla usuario
         sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS " + DB_TABLA_USUARIOS + " (" +
@@ -175,6 +180,33 @@ public class BD extends SQLiteOpenHelper {
             }
         }
         return id;
+    }
+
+
+    /**
+     * Permite obtener la lista de tareas del usuario
+     *
+     * @param id_usuario id del usuario
+     */
+    public List<tareas> leerTareasUsuario(int id_usuario) {
+        tareas tareas = null;
+        List<tareas> tareasList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        if (db.isOpen()) {
+            Cursor c = db.rawQuery("select id,nombre,descripcion,estado from tareas where id_usuario= " + id_usuario + " ;", null);
+            while (c.moveToNext()) {
+                tareas = new tareas();
+                tareas.setId(c.getInt(0));
+                tareas.setNombre(c.getString(1));
+                tareas.setDescripcion(c.getString(2));
+                tareas.setEstado(c.getString(3));
+                tareasList.add(tareas);
+            }
+            c.close();
+            db.close();
+
+        }
+        return tareasList;
     }
 
 }

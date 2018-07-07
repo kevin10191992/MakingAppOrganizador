@@ -3,6 +3,7 @@ package com.making.apps.organizador;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AlertDialog;
@@ -12,21 +13,23 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.OvershootInterpolator;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.making.apps.organizador.adapters.TareasRecyclerViewAdapter;
 import com.making.apps.organizador.pojos.tareas;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TareasActivity extends AppCompatActivity {
 
     private RecyclerView reyclerViewTareas;
-    private MainActivity mainActivity;
     private TareasRecyclerViewAdapter TareasRecyclerViewAdapter;
     private List<tareas> tareasList;
     int id_usuario;
@@ -37,11 +40,13 @@ public class TareasActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tareas);
         Toolbar toolbar = findViewById(R.id.toolbar);
+        reyclerViewTareas = findViewById(R.id.RecyclerViewTareas);
+
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
+        final FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -53,15 +58,55 @@ public class TareasActivity extends AppCompatActivity {
         if (getPrefs != null) {
             id_usuario = getPrefs.getInt(getString(R.string.shared_id_usuario), -1);
         }
-        Log.e("a", "id_usuario" + id_usuario);
 
+        baseDatos = new BD(this);
 
-        reyclerViewTareas = findViewById(R.id.RecyclerViewTareas);
         reyclerViewTareas.setHasFixedSize(true);
         reyclerViewTareas.setLayoutManager(new LinearLayoutManager(this));
-        tareasList = new ArrayList<>(); // TODO: 6/07/2018 lista de tareas de la bd llenar
-        TareasRecyclerViewAdapter = new TareasRecyclerViewAdapter(tareasList);
-        reyclerViewTareas.setAdapter(TareasRecyclerViewAdapter);
+
+        try {
+            tareasList = baseDatos.leerTareasUsuario(id_usuario);
+        } catch (Exception e) {
+            Log.e("e", e.toString());
+        }
+        if (tareasList != null) {
+            TareasRecyclerViewAdapter = new TareasRecyclerViewAdapter(tareasList);//se traen las tareas del usuario.
+            reyclerViewTareas.setAdapter(TareasRecyclerViewAdapter);
+
+            reyclerViewTareas.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                    super.onScrollStateChanged(recyclerView, newState);
+                    if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
+                        // Hiding FAB
+
+                        // 3. Property Animation - using animate()
+                        //    chain method
+                        fab.animate()
+                                .scaleX(0)
+                                .scaleY(0)
+                                .setDuration(200)
+                                .setInterpolator(new LinearInterpolator())
+                                .start();
+
+                    } else if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                        // Showing FAB
+
+                        // 3. Property Animation - using animate()
+                        //    chain method
+                        fab.animate()
+                                .scaleX(1)
+                                .scaleY(1)
+                                .setDuration(400)
+                                .setInterpolator(new OvershootInterpolator())
+                                .start();
+
+                    }
+                }
+            });
+
+        }
+
 
     }
 
@@ -70,6 +115,9 @@ public class TareasActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 finish();
+                break;
+            case R.id.action_cerrar_sesion:
+                // TODO: 7/07/2018  poner aquii el cierre de sesion 
                 break;
         }
 
@@ -81,6 +129,14 @@ public class TareasActivity extends AppCompatActivity {
         finish();
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_scrolling, menu);
+        return super.onCreateOptionsMenu(menu);
+
+    }
 
     /**
      * Metodo que genera un cuado de dialogo para el registro del usuario
