@@ -10,6 +10,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,6 +35,9 @@ public class TareasActivity extends AppCompatActivity {
     private List<tareas> tareasList;
     int id_usuario;
     private BD baseDatos;
+    boolean layoutTareas;
+    private LinearLayoutManager tareasLinearLayout;
+    private StaggeredGridLayoutManager tareasStaggeredGridLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +66,10 @@ public class TareasActivity extends AppCompatActivity {
         baseDatos = new BD(this);
 
         reyclerViewTareas.setHasFixedSize(true);
-        reyclerViewTareas.setLayoutManager(new LinearLayoutManager(this));
+        tareasLinearLayout = new LinearLayoutManager(this);
+        tareasStaggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        reyclerViewTareas.setLayoutManager(tareasStaggeredGridLayoutManager);
+        layoutTareas = true;
 
         try {
             tareasList = baseDatos.leerTareasUsuario(id_usuario);
@@ -117,7 +124,19 @@ public class TareasActivity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.action_cerrar_sesion:
-                // TODO: 7/07/2018  poner aquii el cierre de sesion 
+                //se elimina el share preferences para cerrar sesion local
+                SplashActivity.borrarPreferences(TareasActivity.this);
+                break;
+
+            case R.id.action_cambiar_vista:
+                if (layoutTareas) {
+                    reyclerViewTareas.setLayoutManager(tareasLinearLayout);
+                    layoutTareas = false;
+                } else {
+                    reyclerViewTareas.setLayoutManager(tareasStaggeredGridLayoutManager);
+                    layoutTareas = true;
+
+                }
                 break;
         }
 
@@ -148,7 +167,7 @@ public class TareasActivity extends AppCompatActivity {
         final View dialogView = inflater.inflate(R.layout.dialog_insertar_tarea, null);
         dialogBuilder.setView(dialogView);
 
-        final TextInputEditText titulo = dialogView.findViewById(R.id.EditTexTituloTarea);
+        final TextInputEditText titulo = dialogView.findViewById(R.id.EditTexDescripcionTarea);
         final TextInputEditText descripcion = dialogView.findViewById(R.id.EditTexTituloDescripcion);
 
         Button boton_guardar = dialogView.findViewById(R.id.buttonGuardar);
@@ -176,15 +195,11 @@ public class TareasActivity extends AppCompatActivity {
                         nuevaTarea.setDescripcion(descripcionr);
                         nuevaTarea.setEstado(getString(R.string.t_estado_en_espera));
                         nuevaTarea.setId_usuario(id_usuario);
-                        Log.e("e", "idtareanuevo " + id_tarea);
-
                         if (id_tarea > -1) {
                             nuevaTarea.setId(id_tarea);
                         }
-
-
+                        //se agrega nueva tarea a la lista y se notifica el cambio en el adapter
                         tareasList.add(nuevaTarea);
-                        TareasRecyclerViewAdapter.notifyItemInserted((tareasList.size() - 1));
                         TareasRecyclerViewAdapter.notifyDataSetChanged();
 
                         alertDialog.dismiss();
