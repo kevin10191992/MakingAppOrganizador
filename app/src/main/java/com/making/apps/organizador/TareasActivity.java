@@ -255,6 +255,7 @@ public class TareasActivity extends AppCompatActivity {
         final TextView tituloventana = dialogView.findViewById(R.id.TextViewTituloVentana);
         final TextInputEditText titulo = dialogView.findViewById(R.id.EditTexTituloTarea);
         final TextInputEditText descripcion = dialogView.findViewById(R.id.EditTexDescripcionTarea);
+        final Spinner spinnerEstado = dialogView.findViewById(R.id.spinnerEstado);
 
         Button boton_guardar = dialogView.findViewById(R.id.buttonGuardar);
         Button boton_eliminar = dialogView.findViewById(R.id.buttonCancelar);
@@ -267,25 +268,29 @@ public class TareasActivity extends AppCompatActivity {
         final AlertDialog alertDialog = dialogBuilder.create();
 
         baseDatos = new BD(activity);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.EstadosTareas, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerEstado.setAdapter(adapter);
 
         boton_guardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String titulor = String.valueOf(titulo.getText());
                 String descripcionr = String.valueOf(descripcion.getText());
+                String estado = String.valueOf(spinnerEstado.getSelectedItem().toString());
                 int id_tarea;
                 if (!titulor.isEmpty() && !descripcionr.isEmpty()) {
                     try {
                         //valida si usuario existe en BD
 
                         //se inserta usuario con clave generada
-                        baseDatos.insertarTareas(titulor, descripcionr, getString(R.string.t_estado_en_espera), id_usuario);
+                        baseDatos.insertarTareas(titulor, descripcionr, estado, id_usuario); // TODO: 7/07/2018 debe actaulziar 
                         id_tarea = baseDatos.obtenermaxIdTareas();
                         tareas nuevaTarea = new tareas();
                         if (id_tarea > -1) nuevaTarea.setId(id_tarea);
                         nuevaTarea.setNombre(titulor);
                         nuevaTarea.setDescripcion(descripcionr);
-                        nuevaTarea.setEstado(getString(R.string.t_estado_en_espera));
+                        nuevaTarea.setEstado(estado);
                         nuevaTarea.setId_usuario(id_usuario);
 
                         //se agrega nueva tarea a la lista y se notifica el cambio en el adapter
