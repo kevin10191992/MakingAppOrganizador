@@ -28,17 +28,24 @@
     <string name="t_estado_en_progreso">En progreso</string>
     <string name="t_estado_en_finalizada">Finalizada</string>
 
+    <string name="texto_editar_tarea">Editar Tarea</string>
 
 
+    <string name="titulo_tareas_activity">Tareas</string>
 
 
-
-    <string name="title_activity_scrolling">ScrollingActivity</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
         "A material metaphor is the unifying theory of a rationalized spa
     </string>
     <string name="action_settings">Settings</string>
+    <string name="texto_titulo_tarea">Titulo de la tarea</string>
+    <string name="texto_descripcion_tarea">Descripcion de la tarea</string>
+    <string name="texto_crear_tarea">Crear Tarea</string>
+    <string name="texto_estado">Estado</string>
+    <string name="texto_cancelar">Cancelar</string>
+    <string name="texto_guardar">Guardar</string>
+    <string name="text_tarea_creada">Tarea Creada</string>
 
 
 </resources>

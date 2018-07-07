@@ -23,11 +23,16 @@
 
         <android.support.constraint.Guideline
             android:id="@+id/guideline2"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="360dp"
+            android:layout_marginTop="47dp"
             android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintGuide_begin="57dp"
-            app:layout_constraintGuide_percent=".1" />
+            app:layout_constraintGuide_percent=".1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/imageView"
@@ -80,8 +85,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:gravity="center"
@@ -104,14 +107,13 @@
         <Button
             android:id="@+id/boton_login"
             style="@style/boton_colored_flat"
-            android:layout_width="0dp"
+            android:layout_width="168dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="8dp"
             android:text="@string/login_text"
             android:textSize="@dimen/text_size_grande"
             app:layout_constraintEnd_toStartOf="@+id/boton_registro"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="spread"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout_clave" />
@@ -119,7 +121,7 @@
         <Button
             android:id="@+id/boton_registro"
             style="@style/boton_border_flat"
-            android:layout_width="0dp"
+            android:layout_width="168dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="8dp"
@@ -127,10 +129,10 @@
             android:foreground="?selectableItemBackground"
             android:text="@string/texto_login_registrarse"
             android:textSize="@dimen/text_size_grande"
+            app:layout_constraintBottom_toBottomOf="@+id/boton_login"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/boton_login"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout_clave" />
+            app:layout_constraintTop_toTopOf="@+id/boton_login" />
 
 
         <TextView

@@ -118,8 +118,8 @@ public class MainActivity extends AppCompatActivity {
      * Metodo que hace login con BD
      */
     private void loginLocal() {
-        String usuariobd = usuario.getText().toString();
-        String clavebd = clave.getText().toString();
+        String usuariobd = String.valueOf(usuario.getText());
+        String clavebd = String.valueOf(clave.getText());
         int id_usuario;
 
         if (!usuariobd.isEmpty() && !clavebd.isEmpty()) {
@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
                 if (baseDatos.existeEnBd(usuariobd)) {
                     id_usuario = baseDatos.loginBD(usuariobd, clavebd);
                     if (id_usuario > -1) {
-                        com.making.apps.organizador.pojos.usuario nuevo_user = new usuario();
+                        usuario nuevo_user = new usuario();
                         nuevo_user.setId(id_usuario);
                         nuevo_user.setNombre(usuariobd);
                         nuevo_user.setClave(clavebd);
@@ -136,6 +136,7 @@ public class MainActivity extends AppCompatActivity {
 
                         SharedPreferences.Editor editor = getApplicationContext().getSharedPreferences("sesion", Context.MODE_PRIVATE).edit();
                         editor.putInt("id_usuario", id_usuario);
+                        editor.putString("nombre_usuario", usuariobd);
                         editor.apply();
                         editor.commit();
 

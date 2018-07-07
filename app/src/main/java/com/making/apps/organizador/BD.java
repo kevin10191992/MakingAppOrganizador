@@ -44,6 +44,8 @@ public class BD extends SQLiteOpenHelper {
                 DB_COLUMNA_TAREAS_ESTADO + " TEXT);");
 
         sqLiteDatabase.execSQL("CREATE INDEX `index_tareas` ON `tareas` (`id`,`estado`);");
+        sqLiteDatabase.execSQL("CREATE INDEX `index_tareas` ON `tareas` (`id`,`id_usuario`);");
+        sqLiteDatabase.execSQL("CREATE INDEX `index_tareas` ON `tareas` (`id_usuario`,`estado`);");
 
         //tabla usuario
         sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS " + DB_TABLA_USUARIOS + " (" +
@@ -69,7 +71,6 @@ public class BD extends SQLiteOpenHelper {
      * @param usuario nombre del usuario
      */
     public boolean existeEnBd(String usuario) {
-        Log.e("en", "entre a verificar " + usuario);
         int contador = 0;
         SQLiteDatabase db = this.getReadableDatabase();
         if (db.isOpen()) {
@@ -155,6 +156,25 @@ public class BD extends SQLiteOpenHelper {
         datos.put(DB_COLUMNA_TAREAS_DESCRIPCION, descripcion);
         datos.put(DB_COLUMNA_TAREAS_ESTADO, estado);
         db.insert(DB_TABLA_TAREAS, null, datos);
+    }
+
+    /**
+     * Permite obtener el id actual para insertarlo en la bd
+     */
+    public int obtenermaxIdTareas() {
+        int id = -1;
+        SQLiteDatabase db = this.getReadableDatabase();
+        if (db.isOpen()) {
+            Cursor c = db.rawQuery("select max(id) from tareas", null);
+            if (c.moveToFirst()) {
+                id = c.getInt(0);
+                c.close();
+                db.close();
+                return id;
+
+            }
+        }
+        return id;
     }
 
 }
