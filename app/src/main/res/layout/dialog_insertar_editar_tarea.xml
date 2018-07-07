@@ -65,13 +65,13 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="6dp"
             android:foregroundGravity="center"
             android:gravity="center"
             android:text="@string/texto_estado"
             app:layout_constraintBottom_toBottomOf="@+id/spinnerEstado"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/EditTexDescripcionTarea" />
+            app:layout_constraintTop_toTopOf="@+id/spinnerEstado" />
 
         <Spinner
             android:id="@+id/spinnerEstado"

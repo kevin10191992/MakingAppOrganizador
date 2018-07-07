@@ -198,13 +198,13 @@ public class TareasActivity extends AppCompatActivity {
                         //valida si usuario existe en BD
 
                         //se inserta usuario con clave generada
-                        baseDatos.insertarTareas(titulor, descripcionr, getString(R.string.t_estado_en_espera), id_usuario);
+                        baseDatos.insertarTareas(titulor, descripcionr, spinnerEstado.getSelectedItem().toString(), id_usuario);
                         id_tarea = baseDatos.obtenermaxIdTareas();
                         tareas nuevaTarea = new tareas();
                         if (id_tarea > -1) nuevaTarea.setId(id_tarea);
                         nuevaTarea.setNombre(titulor);
                         nuevaTarea.setDescripcion(descripcionr);
-                        nuevaTarea.setEstado(getString(R.string.t_estado_en_espera));
+                        nuevaTarea.setEstado(spinnerEstado.getSelectedItem().toString());
                         nuevaTarea.setId_usuario(id_usuario);
 
                         //se agrega nueva tarea a la lista y se notifica el cambio en el adapter
