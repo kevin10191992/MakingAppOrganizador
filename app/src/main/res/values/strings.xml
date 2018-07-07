@@ -23,6 +23,15 @@
     <string name="shared_id_usuario">id_usuario</string>
     <string name="shared_sesion">sesion</string>
 
+    <!-- Strings related to estados tareas -->
+    <string name="t_estado_en_espera">En espera</string>
+    <string name="t_estado_en_progreso">En progreso</string>
+    <string name="t_estado_en_finalizada">Finalizada</string>
+
+
+
+
+
 
     <string name="title_activity_scrolling">ScrollingActivity</string>
     <string name="large_text">

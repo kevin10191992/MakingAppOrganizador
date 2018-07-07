@@ -20,6 +20,7 @@ public class BD extends SQLiteOpenHelper {
 
     private static final String DB_TABLA_TAREAS = "tareas";
     private static final String DB_COLUMNA_TAREAS_ID = "id";
+    private static final String DB_COLUMNA_TAREAS_ID_USUARIO = "id_uduario";
     private static final String DB_COLUMNA_TAREAS_NOMBRE = "nombre";
     private static final String DB_COLUMNA_TAREAS_DESCRIPCION = "descripion";
     private static final String DB_COLUMNA_TAREAS_ESTADO = "estado";
@@ -37,6 +38,7 @@ public class BD extends SQLiteOpenHelper {
         //tabla taras
         sqLiteDatabase.execSQL("CREATE TABLE IF NOT EXISTS " + DB_TABLA_TAREAS + " (" +
                 DB_COLUMNA_TAREAS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                DB_COLUMNA_TAREAS_ID_USUARIO + " INTEGER, " +
                 DB_COLUMNA_TAREAS_NOMBRE + " TEXT, " +
                 DB_COLUMNA_TAREAS_DESCRIPCION + " TEXT, " +
                 DB_COLUMNA_TAREAS_ESTADO + " TEXT);");
@@ -145,9 +147,10 @@ public class BD extends SQLiteOpenHelper {
      * @param descripcion descripcion de la tarea
      * @param estado      estadi de la tarea 1 vigente 0 terminada
      */
-    public void insertarTareas(String nombre, String descripcion, int estado) {
+    public void insertarTareas(String nombre, String descripcion, String estado, int id_usuario) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues datos = new ContentValues();
+        datos.put(DB_COLUMNA_TAREAS_ID_USUARIO, id_usuario);
         datos.put(DB_COLUMNA_TAREAS_NOMBRE, nombre);
         datos.put(DB_COLUMNA_TAREAS_DESCRIPCION, descripcion);
         datos.put(DB_COLUMNA_TAREAS_ESTADO, estado);

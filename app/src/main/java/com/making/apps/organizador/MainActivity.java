@@ -23,9 +23,6 @@ public class MainActivity extends AppCompatActivity {
 
     private TextInputEditText usuario;
     private TextInputEditText clave;
-    private Button login;
-    private Button login_facebook;
-    private Button registrarse;
     private BD baseDatos;
 
 
@@ -36,9 +33,10 @@ public class MainActivity extends AppCompatActivity {
 
         usuario = findViewById(R.id.input_usuario);
         clave = findViewById(R.id.input_clave);
-        login = findViewById(R.id.boton_login);
-        login_facebook = findViewById(R.id.boton_login_facebook);
-        registrarse = findViewById(R.id.boton_registro);
+
+        Button login = findViewById(R.id.boton_login);
+        Button login_facebook = findViewById(R.id.boton_login_facebook);
+        Button registrarse = findViewById(R.id.boton_registro);
 
         baseDatos = new BD(this);
 
