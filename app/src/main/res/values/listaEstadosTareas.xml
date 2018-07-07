@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="EstadosTareas">
+        <item>@string/t_estado_en_espera</item>
+        <item>@string/t_estado_en_progreso</item>
+        <item>@string/t_estado_en_finalizada</item>
+    </string-array>
+
+</resources>

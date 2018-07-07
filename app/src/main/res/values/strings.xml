@@ -41,9 +41,12 @@
     <string name="texto_estado">Estado</string>
     <string name="texto_cancelar">Cancelar</string>
     <string name="texto_guardar">Guardar</string>
+    <string name="texo_eliminar">Eliminar</string>
     <string name="text_tarea_creada">Tarea Creada</string>
 
 
     <string name="action_cambiar_vista">Cambiar vista</string>
+    <string name="TextoAceptar">Aceptar</string>
+
 
 </resources>

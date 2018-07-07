@@ -1,7 +1,9 @@
 package com.making.apps.organizador;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -48,14 +50,29 @@ public class SplashActivity extends AppCompatActivity {
      *
      * @param activity actividad desde la que se quiere cerrar sesion
      */
-    public static void borrarPreferences(Activity activity) {
-        SharedPreferences.Editor editor = activity.getSharedPreferences("sesion", Context.MODE_PRIVATE).edit();
-        editor.clear();
-        editor.apply();
-        editor.commit();
+    public static void borrarPreferences(final Activity activity) {
 
-        activity.startActivity(new Intent(activity, SplashActivity.class));
-        activity.finish();
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setMessage("Are you sure?").setPositiveButton(activity.getString(R.string.TextoAceptar), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                SharedPreferences.Editor editor = activity.getSharedPreferences("sesion", Context.MODE_PRIVATE).edit();
+                editor.clear();
+                editor.apply();
+                editor.commit();
+
+                activity.startActivity(new Intent(activity, SplashActivity.class));
+                activity.finish();
+            }
+        })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                }).show();
+
 
     }
 

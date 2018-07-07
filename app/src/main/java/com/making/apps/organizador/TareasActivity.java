@@ -1,5 +1,6 @@
 package com.making.apps.organizador;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -20,7 +21,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.OvershootInterpolator;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.making.apps.organizador.adapters.TareasRecyclerViewAdapter;
@@ -39,12 +43,14 @@ public class TareasActivity extends AppCompatActivity {
     private LinearLayoutManager tareasLinearLayout;
     private StaggeredGridLayoutManager tareasStaggeredGridLayoutManager;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tareas);
         Toolbar toolbar = findViewById(R.id.toolbar);
         reyclerViewTareas = findViewById(R.id.RecyclerViewTareas);
+
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -77,7 +83,7 @@ public class TareasActivity extends AppCompatActivity {
             Log.e("e", e.toString());
         }
         if (tareasList != null) {
-            TareasRecyclerViewAdapter = new TareasRecyclerViewAdapter(tareasList);//se traen las tareas del usuario.
+            TareasRecyclerViewAdapter = new TareasRecyclerViewAdapter(tareasList, TareasActivity.this);//se traen las tareas del usuario.
             reyclerViewTareas.setAdapter(TareasRecyclerViewAdapter);
 
             reyclerViewTareas.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -86,7 +92,6 @@ public class TareasActivity extends AppCompatActivity {
                     super.onScrollStateChanged(recyclerView, newState);
                     if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
                         // Hiding FAB
-
                         // 3. Property Animation - using animate()
                         //    chain method
                         fab.animate()
@@ -98,7 +103,6 @@ public class TareasActivity extends AppCompatActivity {
 
                     } else if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                         // Showing FAB
-
                         // 3. Property Animation - using animate()
                         //    chain method
                         fab.animate()
@@ -164,11 +168,12 @@ public class TareasActivity extends AppCompatActivity {
 
         final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
-        final View dialogView = inflater.inflate(R.layout.dialog_insertar_tarea, null);
+        final View dialogView = inflater.inflate(R.layout.dialog_insertar_editar_tarea, null);
         dialogBuilder.setView(dialogView);
 
-        final TextInputEditText titulo = dialogView.findViewById(R.id.EditTexDescripcionTarea);
-        final TextInputEditText descripcion = dialogView.findViewById(R.id.EditTexTituloDescripcion);
+        final TextInputEditText titulo = dialogView.findViewById(R.id.EditTexTituloTarea);
+        final TextInputEditText descripcion = dialogView.findViewById(R.id.EditTexDescripcionTarea);
+        final Spinner spinnerEstado = dialogView.findViewById(R.id.spinnerEstado);
 
         Button boton_guardar = dialogView.findViewById(R.id.buttonGuardar);
         Button boton_cancelar = dialogView.findViewById(R.id.buttonCancelar);
@@ -176,6 +181,11 @@ public class TareasActivity extends AppCompatActivity {
         final AlertDialog alertDialog = dialogBuilder.create();
 
         baseDatos = new BD(this);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.EstadosTareas, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerEstado.setAdapter(adapter);
+
 
         boton_guardar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -191,13 +201,12 @@ public class TareasActivity extends AppCompatActivity {
                         baseDatos.insertarTareas(titulor, descripcionr, getString(R.string.t_estado_en_espera), id_usuario);
                         id_tarea = baseDatos.obtenermaxIdTareas();
                         tareas nuevaTarea = new tareas();
+                        if (id_tarea > -1) nuevaTarea.setId(id_tarea);
                         nuevaTarea.setNombre(titulor);
                         nuevaTarea.setDescripcion(descripcionr);
                         nuevaTarea.setEstado(getString(R.string.t_estado_en_espera));
                         nuevaTarea.setId_usuario(id_usuario);
-                        if (id_tarea > -1) {
-                            nuevaTarea.setId(id_tarea);
-                        }
+
                         //se agrega nueva tarea a la lista y se notifica el cambio en el adapter
                         tareasList.add(nuevaTarea);
                         TareasRecyclerViewAdapter.notifyDataSetChanged();
@@ -232,5 +241,85 @@ public class TareasActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Metodo para editar las tareas, crea cuadro de dialogo.
+     *
+     * @param tarea la tarea que se quiere editar
+     */
+    public void alerDialogEditarTarea(tareas tarea, Activity activity) {
+
+        final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(activity);
+        LayoutInflater inflater = activity.getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.dialog_insertar_editar_tarea, null);
+        dialogBuilder.setView(dialogView);
+        final TextView tituloventana = dialogView.findViewById(R.id.TextViewTituloVentana);
+        final TextInputEditText titulo = dialogView.findViewById(R.id.EditTexTituloTarea);
+        final TextInputEditText descripcion = dialogView.findViewById(R.id.EditTexDescripcionTarea);
+
+        Button boton_guardar = dialogView.findViewById(R.id.buttonGuardar);
+        Button boton_eliminar = dialogView.findViewById(R.id.buttonCancelar);
+
+        tituloventana.setText(R.string.texto_editar_tarea);
+        titulo.setText(tarea.getNombre());
+        descripcion.setText(tarea.getDescripcion());
+        boton_eliminar.setText(R.string.texo_eliminar);
+
+        final AlertDialog alertDialog = dialogBuilder.create();
+
+        baseDatos = new BD(activity);
+
+        boton_guardar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String titulor = String.valueOf(titulo.getText());
+                String descripcionr = String.valueOf(descripcion.getText());
+                int id_tarea;
+                if (!titulor.isEmpty() && !descripcionr.isEmpty()) {
+                    try {
+                        //valida si usuario existe en BD
+
+                        //se inserta usuario con clave generada
+                        baseDatos.insertarTareas(titulor, descripcionr, getString(R.string.t_estado_en_espera), id_usuario);
+                        id_tarea = baseDatos.obtenermaxIdTareas();
+                        tareas nuevaTarea = new tareas();
+                        if (id_tarea > -1) nuevaTarea.setId(id_tarea);
+                        nuevaTarea.setNombre(titulor);
+                        nuevaTarea.setDescripcion(descripcionr);
+                        nuevaTarea.setEstado(getString(R.string.t_estado_en_espera));
+                        nuevaTarea.setId_usuario(id_usuario);
+
+                        //se agrega nueva tarea a la lista y se notifica el cambio en el adapter
+                        tareasList.add(nuevaTarea);
+                        TareasRecyclerViewAdapter.notifyDataSetChanged();
+
+                        alertDialog.dismiss();
+                        baseDatos = null;
+                        Toast.makeText(view.getContext(), R.string.text_tarea_creada, Toast.LENGTH_SHORT).show();
+
+
+                    } catch (Exception e) {
+                        Log.e("error", e.toString());
+                    }
+                } else {
+
+                    Toast.makeText(view.getContext(), R.string.text_complete_todo, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
+        boton_eliminar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+                baseDatos = null;
+            }
+        });
+
+
+        alertDialog.show();
+
+
+    }
 
 }
