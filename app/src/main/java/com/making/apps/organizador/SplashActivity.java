@@ -1,5 +1,6 @@
 package com.making.apps.organizador;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -42,5 +43,34 @@ public class SplashActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Se elimina el share preferences para cerrar sesion local
+     *
+     * @param activity actividad desde la que se quiere cerrar sesion
+     */
+    public static void borrarPreferences(Activity activity) {
+        SharedPreferences.Editor editor = activity.getSharedPreferences("sesion", Context.MODE_PRIVATE).edit();
+        editor.clear();
+        editor.apply();
+        editor.commit();
 
+        activity.startActivity(new Intent(activity, SplashActivity.class));
+        activity.finish();
+
+    }
+
+    /**
+     * Permite guardar las preferencias del usuario para el manejo de la sesion
+     *
+     * @param activity   actividad desde donde se inicia sesion
+     * @param id_usuario id del usuario
+     * @param usuariobd  nombre del usuario
+     */
+    public static void guardarPreferences(Activity activity, int id_usuario, String usuariobd) {
+        SharedPreferences.Editor editor = activity.getSharedPreferences("sesion", Context.MODE_PRIVATE).edit();
+        editor.putInt("id_usuario", id_usuario);
+        editor.putString("nombre_usuario", usuariobd);
+        editor.apply();
+        editor.commit();
+    }
 }

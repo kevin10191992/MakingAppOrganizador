@@ -58,8 +58,8 @@ public class TareasRecyclerViewAdapter extends RecyclerView.Adapter<TareasRecycl
 
         TareasViewHolder(@NonNull View itemView) {
             super(itemView);
-            nombre = itemView.findViewById(R.id.TextViewTarea);
-            descripcion = itemView.findViewById(R.id.EditTexTituloTarea);
+            nombre = itemView.findViewById(R.id.TextViewTituloTarea);
+            descripcion = itemView.findViewById(R.id.EditTexDescripcionTarea);
             estado = itemView.findViewById(R.id.textViewTareaEstado);
             card_view_tareas = itemView.findViewById(R.id.card_view_tareas);
         }

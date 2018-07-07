@@ -2,9 +2,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.making.apps.organizador.TareasActivity">
+
+    <item
+        android:id="@+id/action_cambiar_vista"
+        android:orderInCategory="100"
+        android:title="@string/action_cambiar_vista"
+        app:showAsAction="never" />
+
     <item
         android:id="@+id/action_cerrar_sesion"
         android:orderInCategory="100"
         android:title="@string/action_cerrar_sesion"
         app:showAsAction="never" />
+
+
 </menu>

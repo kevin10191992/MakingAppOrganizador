@@ -16,7 +16,7 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/TextViewTarea"
+            android:id="@+id/TextViewTituloTarea"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@color/secondaryColor"
@@ -30,7 +30,7 @@
 
 
         <android.support.design.widget.TextInputEditText
-            android:id="@+id/EditTexTituloTarea"
+            android:id="@+id/EditTexDescripcionTarea"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
@@ -42,7 +42,7 @@
             android:minLines="1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/TextViewTarea" />
+            app:layout_constraintTop_toBottomOf="@+id/TextViewTituloTarea" />
 
 
         <android.support.design.widget.TextInputEditText
@@ -56,7 +56,7 @@
             android:minHeight="100dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/EditTexTituloTarea" />
+            app:layout_constraintTop_toBottomOf="@+id/EditTexDescripcionTarea" />
 
 
         <Button

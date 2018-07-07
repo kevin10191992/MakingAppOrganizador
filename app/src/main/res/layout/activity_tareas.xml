@@ -46,20 +46,14 @@
         tools:context=".TareasActivity"
         tools:showIn="@layout/activity_tareas">
 
-        <android.support.design.circularreveal.cardview.CircularRevealCardView
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/RecyclerViewTareas"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:scrollbars="none" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/RecyclerViewTareas"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:animateLayoutChanges="true"
-                android:orientation="vertical"
-                android:scrollbars="none" />
-
-
-        </android.support.design.circularreveal.cardview.CircularRevealCardView>
 
     </android.support.v4.widget.NestedScrollView>
 

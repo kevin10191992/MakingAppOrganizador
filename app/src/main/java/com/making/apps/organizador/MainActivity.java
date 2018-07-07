@@ -1,8 +1,6 @@
 package com.making.apps.organizador;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AlertDialog;
@@ -133,12 +131,8 @@ public class MainActivity extends AppCompatActivity {
                         nuevo_user.setNombre(usuariobd);
                         nuevo_user.setClave(clavebd);
 
-
-                        SharedPreferences.Editor editor = getApplicationContext().getSharedPreferences("sesion", Context.MODE_PRIVATE).edit();
-                        editor.putInt("id_usuario", id_usuario);
-                        editor.putString("nombre_usuario", usuariobd);
-                        editor.apply();
-                        editor.commit();
+                        ///se guardan datos del usuario
+                        SplashActivity.guardarPreferences(MainActivity.this, id_usuario, usuariobd);
 
                         startActivity(new Intent(this, TareasActivity.class));
                         this.finish();
@@ -157,4 +151,9 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+
 }
+
+
+

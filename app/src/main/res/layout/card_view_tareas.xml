@@ -3,24 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/tools"
     android:id="@+id/card_view_tareas"
-    style="@style/Widget.MaterialComponents.CardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:layout_margin="8dp"
     android:clickable="true"
     android:focusable="true"
-    android:foreground="?android:attr/selectableItemBackground"
+    android:focusableInTouchMode="true"
+    android:foreground="?selectableItemBackgroundBorderless"
     card_view:cardCornerRadius="4dp"
     card_view:context=".TareasActivity">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
+
 
         <TextView
-            android:id="@+id/TextViewTarea"
-            android:layout_width="0dp"
+            android:id="@+id/TextViewTituloTarea"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/secondaryColor"
             android:padding="8dp"
@@ -33,51 +34,29 @@
             app:layout_constraintTop_toTopOf="parent"
             card_view:cardCornerRadius="4dp" />
 
-        <ImageButton
-            android:id="@+id/imageButton_editar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginTop="8dp"
-            android:adjustViewBounds="true"
-            android:background="@drawable/ic_outline_edit_24px"
-            android:cropToPadding="true"
-            android:elevation="2dp"
-            android:foreground="?selectableItemBackgroundBorderless"
-            android:tooltipText="@string/texto_editar_tarea"
-            app:layout_constraintBottom_toBottomOf="@+id/TextViewTarea"
-            app:layout_constraintEnd_toEndOf="@+id/TextViewTarea"
-            app:layout_constraintTop_toTopOf="@+id/TextViewTarea" />
 
         <TextView
-            android:id="@+id/EditTexTituloTarea"
+            android:id="@+id/EditTexDescripcionTarea"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
-            android:text="@string/large_text"
+            android:text="@string/texto_descripcion_tarea"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/TextViewTarea" />
-
-        <android.support.constraint.Guideline
-            android:id="@+id/guideline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_begin="224dp" />
+            app:layout_constraintTop_toBottomOf="@+id/TextViewTituloTarea" />
 
         <View
             android:id="@+id/view"
             android:layout_width="0dp"
             android:layout_height="1dp"
+            android:layout_marginTop="32dp"
             android:background="@color/secondaryLightColor"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textViewTareaEstado" />
+            app:layout_constraintTop_toBottomOf="@+id/EditTexDescripcionTarea" />
 
         <TextView
             android:id="@+id/textViewTareaEstado"
@@ -92,7 +71,7 @@
             android:textColor="@color/secondaryLightColor"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline" />
+            app:layout_constraintTop_toBottomOf="@+id/view" />
 
     </android.support.constraint.ConstraintLayout>
 </android.support.design.card.MaterialCardView>
