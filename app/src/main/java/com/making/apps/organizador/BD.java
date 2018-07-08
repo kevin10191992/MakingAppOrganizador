@@ -184,6 +184,27 @@ public class BD extends SQLiteOpenHelper {
 
 
     /**
+     * Metodo que actualiza las tareas
+     *
+     * @param id_tarea    id de la tarea a actualizar
+     * @param nombre      nombre de la tarea
+     * @param descripcion descripcion de la tarea
+     * @param estado      estadi de la tarea 1 vigente 0 terminada
+     * @param id_usuario  id del dueño de la tarea
+     */
+    public void actualizarTareas(int id_tarea, String nombre, String descripcion, String estado, int id_usuario) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues datos = new ContentValues();
+        datos.put(DB_COLUMNA_TAREAS_NOMBRE, nombre);
+        datos.put(DB_COLUMNA_TAREAS_DESCRIPCION, descripcion);
+        datos.put(DB_COLUMNA_TAREAS_ESTADO, estado);
+        db.update(DB_TABLA_TAREAS, datos, "id=" + id_tarea + " and id_usuario=" + id_usuario, null);
+
+        Log.e("d", "actualizada");
+    }
+
+
+    /**
      * Permite obtener la lista de tareas del usuario
      *
      * @param id_usuario id del usuario

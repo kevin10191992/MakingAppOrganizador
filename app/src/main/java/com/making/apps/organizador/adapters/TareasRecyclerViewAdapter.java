@@ -1,6 +1,5 @@
 package com.making.apps.organizador.adapters;
 
-import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,11 +16,13 @@ import java.util.List;
 public class TareasRecyclerViewAdapter extends RecyclerView.Adapter<TareasRecyclerViewAdapter.TareasViewHolder> {
 
     private List<tareas> tareasList;
-    private Activity activity;
+    private TareasActivity activity;
+    private RecyclerView recyclerViewTareas;
 
-    public TareasRecyclerViewAdapter(List<tareas> tareasList, Activity activity) {
+    public TareasRecyclerViewAdapter(List<tareas> tareasList, TareasActivity activity, RecyclerView recyclerViewTareas) {
         this.tareasList = tareasList;
         this.activity = activity;
+        this.recyclerViewTareas = recyclerViewTareas;
     }
 
     @NonNull
@@ -36,7 +37,7 @@ public class TareasRecyclerViewAdapter extends RecyclerView.Adapter<TareasRecycl
         tareasViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new TareasActivity().alerDialogEditarTarea(tareasList.get(i), activity);
+                activity.alerDialogEditarTarea(tareasList, i, tareasList.get(i), activity, recyclerViewTareas);
             }
         });
 

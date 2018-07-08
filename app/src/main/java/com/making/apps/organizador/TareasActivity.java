@@ -83,7 +83,7 @@ public class TareasActivity extends AppCompatActivity {
             Log.e("e", e.toString());
         }
         if (tareasList != null) {
-            TareasRecyclerViewAdapter = new TareasRecyclerViewAdapter(tareasList, TareasActivity.this);//se traen las tareas del usuario.
+            TareasRecyclerViewAdapter = new TareasRecyclerViewAdapter(tareasList, TareasActivity.this, reyclerViewTareas);//se traen las tareas del usuario.
             reyclerViewTareas.setAdapter(TareasRecyclerViewAdapter);
 
             reyclerViewTareas.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -197,7 +197,7 @@ public class TareasActivity extends AppCompatActivity {
                     try {
                         //valida si usuario existe en BD
 
-                        //se inserta usuario con clave generada
+                        //se inserta tarea
                         baseDatos.insertarTareas(titulor, descripcionr, spinnerEstado.getSelectedItem().toString(), id_usuario);
                         id_tarea = baseDatos.obtenermaxIdTareas();
                         tareas nuevaTarea = new tareas();
@@ -246,7 +246,7 @@ public class TareasActivity extends AppCompatActivity {
      *
      * @param tarea la tarea que se quiere editar
      */
-    public void alerDialogEditarTarea(tareas tarea, Activity activity) {
+    public void alerDialogEditarTarea(final List<tareas> tareasListAdapter, final int indexAdpter, final tareas tarea, Activity activity, final RecyclerView recyclerViewTareas) {
 
         final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(activity);
         LayoutInflater inflater = activity.getLayoutInflater();
@@ -268,43 +268,42 @@ public class TareasActivity extends AppCompatActivity {
         final AlertDialog alertDialog = dialogBuilder.create();
 
         baseDatos = new BD(activity);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.EstadosTareas, android.R.layout.simple_spinner_item);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(activity, R.array.EstadosTareas, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerEstado.setAdapter(adapter);
+        spinnerEstado.setSelection(adapter.getPosition("" + tarea.getEstado()));
+
 
         boton_guardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String titulor = String.valueOf(titulo.getText());
                 String descripcionr = String.valueOf(descripcion.getText());
-                String estado = String.valueOf(spinnerEstado.getSelectedItem().toString());
-                int id_tarea;
+                String estador = String.valueOf(spinnerEstado.getSelectedItem().toString());
+
                 if (!titulor.isEmpty() && !descripcionr.isEmpty()) {
-                    try {
-                        //valida si usuario existe en BD
-
-                        //se inserta usuario con clave generada
-                        baseDatos.insertarTareas(titulor, descripcionr, estado, id_usuario); // TODO: 7/07/2018 debe actaulziar 
-                        id_tarea = baseDatos.obtenermaxIdTareas();
-                        tareas nuevaTarea = new tareas();
-                        if (id_tarea > -1) nuevaTarea.setId(id_tarea);
-                        nuevaTarea.setNombre(titulor);
-                        nuevaTarea.setDescripcion(descripcionr);
-                        nuevaTarea.setEstado(estado);
-                        nuevaTarea.setId_usuario(id_usuario);
-
-                        //se agrega nueva tarea a la lista y se notifica el cambio en el adapter
-                        tareasList.add(nuevaTarea);
-                        TareasRecyclerViewAdapter.notifyDataSetChanged();
-
-                        alertDialog.dismiss();
-                        baseDatos = null;
-                        Toast.makeText(view.getContext(), R.string.text_tarea_creada, Toast.LENGTH_SHORT).show();
 
 
-                    } catch (Exception e) {
-                        Log.e("error", e.toString());
-                    }
+                    //se actualiza tarea
+                    baseDatos.actualizarTareas(tarea.getId(), titulor, descripcionr, estador, id_usuario);
+                    tarea.setNombre(titulor);
+                    tarea.setDescripcion(descripcionr);
+                    tarea.setEstado(estador);
+
+                    Log.e("a", "nuevo e " + tarea.getEstado());
+
+                    //se notifica el cambio
+                    tareasListAdapter.set(indexAdpter, tarea);
+
+                    TareasRecyclerViewAdapter = new TareasRecyclerViewAdapter(tareasListAdapter, TareasActivity.this, recyclerViewTareas);//se traen las tareas del usuario.
+                    recyclerViewTareas.setAdapter(TareasRecyclerViewAdapter);
+
+
+                    alertDialog.dismiss();
+                    baseDatos = null;
+                    Toast.makeText(view.getContext(), R.string.text_tarea_actualizada, Toast.LENGTH_SHORT).show();
+
+
                 } else {
 
                     Toast.makeText(view.getContext(), R.string.text_complete_todo, Toast.LENGTH_SHORT).show();
@@ -317,7 +316,8 @@ public class TareasActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 alertDialog.dismiss();
-                baseDatos = null;
+                baseDatos = null; // TODO: 8/07/2018 agregar delete tarea
+
             }
         });
 
