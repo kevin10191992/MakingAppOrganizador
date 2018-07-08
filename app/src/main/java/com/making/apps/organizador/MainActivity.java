@@ -77,13 +77,12 @@ public class MainActivity extends AppCompatActivity {
             public void onSuccess(LoginResult loginResult) {
                 // App code
                 AccessToken accessToken = AccessToken.getCurrentAccessToken();
-                final int id_usuario = Integer.parseInt(accessToken.getUserId().substring(0,10));
+                final int id_usuario = Integer.parseInt(accessToken.getUserId().substring(0, 10));
                 profileTracker = new ProfileTracker() {
                     @Override
                     protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
                         if (currentProfile != null) {
                             String usuariobd = currentProfile.getName();
-                            Log.e("a", usuariobd + "");
                             SplashActivity.guardarPreferences(MainActivity.this, id_usuario, usuariobd);
                             startActivity(new Intent(MainActivity.this, TareasActivity.class));
                             MainActivity.this.finish();
