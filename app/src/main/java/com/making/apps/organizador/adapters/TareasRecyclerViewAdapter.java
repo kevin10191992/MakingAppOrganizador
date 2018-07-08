@@ -5,22 +5,27 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import com.making.apps.organizador.R;
 import com.making.apps.organizador.TareasActivity;
 import com.making.apps.organizador.pojos.tareas;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class TareasRecyclerViewAdapter extends RecyclerView.Adapter<TareasRecyclerViewAdapter.TareasViewHolder> {
+public class TareasRecyclerViewAdapter extends RecyclerView.Adapter<TareasRecyclerViewAdapter.TareasViewHolder> implements Filterable {
 
     private List<tareas> tareasList;
+    private List<tareas> tareasListFull;
     private TareasActivity activity;
     private RecyclerView recyclerViewTareas;
 
     public TareasRecyclerViewAdapter(List<tareas> tareasList, TareasActivity activity, RecyclerView recyclerViewTareas) {
         this.tareasList = tareasList;
+        this.tareasListFull = new ArrayList<>(tareasList);
         this.activity = activity;
         this.recyclerViewTareas = recyclerViewTareas;
     }
@@ -48,10 +53,46 @@ public class TareasRecyclerViewAdapter extends RecyclerView.Adapter<TareasRecycl
 
     }
 
+
     @Override
     public int getItemCount() {
         return tareasList.size();
     }
+
+    @Override
+    public Filter getFilter() {
+        return filtrado;
+    }
+
+    private Filter filtrado = new Filter() {
+
+        @Override
+        protected FilterResults performFiltering(CharSequence charSequence) {
+            List<tareas> listafiltrada = new ArrayList<>();
+            if (charSequence.length() == 0) {
+                listafiltrada.addAll(tareasListFull);
+            } else {
+                final String filtro = charSequence.toString().toLowerCase().trim();
+
+                for (tareas tareasf : tareasListFull) {
+                    if (tareasf.getNombre().toLowerCase().contains(filtro) || tareasf.getEstado().toLowerCase().contains(filtro)) {
+                        listafiltrada.add(tareasf);
+                    }
+                }
+            }
+
+            FilterResults filterResults = new FilterResults();
+            filterResults.values = listafiltrada;
+            return filterResults;
+        }
+
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+            tareasList.clear();
+            tareasList.addAll((List<tareas>) filterResults.values);
+            notifyDataSetChanged();
+        }
+    };
 
 
     class TareasViewHolder extends RecyclerView.ViewHolder {
@@ -68,5 +109,6 @@ public class TareasRecyclerViewAdapter extends RecyclerView.Adapter<TareasRecycl
 
         }
     }
+
 
 }

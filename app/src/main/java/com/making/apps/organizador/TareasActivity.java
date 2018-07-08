@@ -1,6 +1,7 @@
 package com.making.apps.organizador;
 
 import android.app.Activity;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -12,6 +13,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -31,6 +33,7 @@ import android.widget.Toast;
 import com.making.apps.organizador.adapters.TareasRecyclerViewAdapter;
 import com.making.apps.organizador.pojos.tareas;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TareasActivity extends AppCompatActivity {
@@ -146,9 +149,9 @@ public class TareasActivity extends AppCompatActivity {
                 break;
 
             case R.id.action_buscar:
-                ///filtra las tareas
+                return true;
 
-                break;
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -164,6 +167,35 @@ public class TareasActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_tareas, menu);
+
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.action_buscar).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setMaxWidth(Integer.MAX_VALUE);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String texto) {
+                List<tareas> listaFiltrada = new ArrayList<>();
+                for (tareas row : tareasList) {
+                    // busca por nombre de la tarea o estado de la misma
+                    if (row.getNombre().toLowerCase().contains(texto.toLowerCase()) || row.getEstado().contains(texto)) {
+                        listaFiltrada.add(row);
+                    }
+                }
+                TareasRecyclerViewAdapter = (com.making.apps.organizador.adapters.TareasRecyclerViewAdapter) reyclerViewTareas.getAdapter();
+                TareasRecyclerViewAdapter.getFilter().filter(texto.toString());
+
+                return true;
+            }
+        });
+
+
         return super.onCreateOptionsMenu(menu);
 
     }
