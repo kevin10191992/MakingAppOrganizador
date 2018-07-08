@@ -35,7 +35,7 @@
     <string name="texo_eliminar">Eliminar</string>
 
     <string name="action_cerrar_sesion">Cerrar Sesion</string>
-    <string name="action_buscar">Buscar</string>
+    <string name="action_buscar">Buscar por tarea y/o estado</string>
     <string name="action_cambiar_vista">Cambiar vista</string>
 
     <string name="texto_titulo_tarea">Titulo de la tarea</string>
@@ -50,6 +50,11 @@
 
     <string name="texto_esta_seguro">¿Desea cerrar sesion?</string>
     <string name="texto_pregunta_tarea">¿Desea eliminar tarea?</string>
+
+
+    <string name="facebook_app_id">1654069211382233</string>
+    <string name="fb_login_protocol_scheme">fb1654069211382233</string>
+
 
 
 </resources>

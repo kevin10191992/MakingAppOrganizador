@@ -172,6 +172,7 @@ public class TareasActivity extends AppCompatActivity {
         SearchView searchView = (SearchView) menu.findItem(R.id.action_buscar).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setMaxWidth(Integer.MAX_VALUE);
+        searchView.setQueryHint(getString(R.string.action_buscar));
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
