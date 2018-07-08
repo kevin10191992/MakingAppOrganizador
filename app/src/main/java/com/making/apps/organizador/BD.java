@@ -199,6 +199,18 @@ public class BD extends SQLiteOpenHelper {
 
 
     /**
+     * Metodo que actualiza las tareas
+     *
+     * @param id_tarea   id de la tarea a eliminar
+     * @param id_usuario id del dueño de la tarea
+     */
+    public void eliminarTareas(int id_tarea, int id_usuario) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("delete from tareas where id=" + id_tarea + " and id_usuario=" + id_usuario + ";");
+    }
+
+
+    /**
      * Permite obtener la lista de tareas del usuario
      *
      * @param id_usuario id del usuario

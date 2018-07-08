@@ -28,26 +28,28 @@
     <string name="t_estado_en_progreso">En progreso</string>
     <string name="t_estado_en_finalizada">Finalizada</string>
 
-    <string name="texto_editar_tarea">Editar Tarea</string>
 
-
-    <string name="titulo_tareas_activity">Tareas</string>
-
+    <string name="TextoAceptar">Aceptar</string>
+    <string name="texto_cancelar">Cancelar</string>
+    <string name="texto_guardar">Guardar</string>
+    <string name="texo_eliminar">Eliminar</string>
 
     <string name="action_cerrar_sesion">Cerrar Sesion</string>
+    <string name="action_buscar">Buscar</string>
+    <string name="action_cambiar_vista">Cambiar vista</string>
+
     <string name="texto_titulo_tarea">Titulo de la tarea</string>
     <string name="texto_descripcion_tarea">Descripcion de la tarea</string>
     <string name="texto_crear_tarea">Crear Tarea</string>
     <string name="texto_estado">Estado</string>
-    <string name="texto_cancelar">Cancelar</string>
-    <string name="texto_guardar">Guardar</string>
-    <string name="texo_eliminar">Eliminar</string>
     <string name="text_tarea_creada">Tarea Creada</string>
     <string name="text_tarea_actualizada">Tarea Actualizada</string>
+    <string name="texto_editar_tarea">Editar Tarea</string>
+    <string name="titulo_tareas_activity">Tareas</string>
 
 
-    <string name="action_cambiar_vista">Cambiar vista</string>
-    <string name="TextoAceptar">Aceptar</string>
+    <string name="texto_esta_seguro">¿Desea cerrar sesion?</string>
+    <string name="texto_pregunta_tarea">¿Desea eliminar tarea?</string>
 
 
 </resources>

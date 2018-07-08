@@ -53,7 +53,7 @@ public class SplashActivity extends AppCompatActivity {
     public static void borrarPreferences(final Activity activity) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        builder.setMessage("Are you sure?").setPositiveButton(activity.getString(R.string.TextoAceptar), new DialogInterface.OnClickListener() {
+        builder.setMessage(activity.getString(R.string.texto_esta_seguro)).setPositiveButton(activity.getString(R.string.TextoAceptar), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -66,7 +66,7 @@ public class SplashActivity extends AppCompatActivity {
                 activity.finish();
             }
         })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                .setNegativeButton(activity.getString(R.string.texto_cancelar), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();

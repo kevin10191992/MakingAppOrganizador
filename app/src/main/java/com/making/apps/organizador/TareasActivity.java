@@ -2,6 +2,7 @@ package com.making.apps.organizador;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -133,6 +134,7 @@ public class TareasActivity extends AppCompatActivity {
                 break;
 
             case R.id.action_cambiar_vista:
+                ///permite camiar e layout
                 if (layoutTareas) {
                     reyclerViewTareas.setLayoutManager(tareasLinearLayout);
                     layoutTareas = false;
@@ -141,6 +143,11 @@ public class TareasActivity extends AppCompatActivity {
                     layoutTareas = true;
 
                 }
+                break;
+
+            case R.id.action_buscar:
+                ///filtra las tareas
+
                 break;
         }
 
@@ -156,7 +163,7 @@ public class TareasActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_scrolling, menu);
+        inflater.inflate(R.menu.menu_tareas, menu);
         return super.onCreateOptionsMenu(menu);
 
     }
@@ -235,7 +242,6 @@ public class TareasActivity extends AppCompatActivity {
             }
         });
 
-
         alertDialog.show();
 
 
@@ -244,9 +250,13 @@ public class TareasActivity extends AppCompatActivity {
     /**
      * Metodo para editar las tareas, crea cuadro de dialogo.
      *
-     * @param tarea la tarea que se quiere editar
+     * @param tareasListAdapter  el adapter actual que contiene las tareas
+     * @param indexAdpter        el indice de la tarea en el adapter
+     * @param tarea              la tarea que se quiere editar
+     * @param activity           el contexto
+     * @param recyclerViewTareas la lista visual en donde se van a actualizar las tareas
      */
-    public void alerDialogEditarTarea(final List<tareas> tareasListAdapter, final int indexAdpter, final tareas tarea, Activity activity, final RecyclerView recyclerViewTareas) {
+    public void alerDialogEditarTarea(final List<tareas> tareasListAdapter, final int indexAdpter, final tareas tarea, final Activity activity, final RecyclerView recyclerViewTareas) {
 
         final AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(activity);
         LayoutInflater inflater = activity.getLayoutInflater();
@@ -268,6 +278,7 @@ public class TareasActivity extends AppCompatActivity {
         final AlertDialog alertDialog = dialogBuilder.create();
 
         baseDatos = new BD(activity);
+        //se llena el spinner de estados y se selecciona el que tiene la tarea
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(activity, R.array.EstadosTareas, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerEstado.setAdapter(adapter);
@@ -316,8 +327,38 @@ public class TareasActivity extends AppCompatActivity {
         boton_eliminar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
+                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(activity);
+                builder.setMessage(activity.getString(R.string.texto_pregunta_tarea)).setPositiveButton(activity.getString(R.string.TextoAceptar), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        baseDatos = new BD(activity);
+                        baseDatos.eliminarTareas(tarea.getId(), id_usuario);
+
+                        //se notifica el cambio a la lista
+                        tareasListAdapter.remove(indexAdpter);
+                        //se obtiene el adapter actual
+                        TareasRecyclerViewAdapter = (com.making.apps.organizador.adapters.TareasRecyclerViewAdapter) recyclerViewTareas.getAdapter();
+                        //se notifica el cambio del item
+                        TareasRecyclerViewAdapter.notifyItemRemoved(indexAdpter);
+                        //se notifica el cambio global
+                        TareasRecyclerViewAdapter.notifyDataSetChanged();
+
+
+                        dialogInterface.dismiss();
+                    }
+                })
+                        .setNegativeButton(activity.getString(R.string.texto_cancelar), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                            }
+                        }).show();
+
+
                 alertDialog.dismiss();
-                baseDatos = null; // TODO: 8/07/2018 agregar delete tarea
+                baseDatos = null;
 
             }
         });
