@@ -290,13 +290,11 @@ public class TareasActivity extends AppCompatActivity {
                     tarea.setDescripcion(descripcionr);
                     tarea.setEstado(estador);
 
-                    Log.e("a", "nuevo e " + tarea.getEstado());
-
                     //se notifica el cambio
                     tareasListAdapter.set(indexAdpter, tarea);
-
-                    TareasRecyclerViewAdapter = new TareasRecyclerViewAdapter(tareasListAdapter, TareasActivity.this, recyclerViewTareas);//se traen las tareas del usuario.
-                    recyclerViewTareas.setAdapter(TareasRecyclerViewAdapter);
+                    TareasRecyclerViewAdapter = (com.making.apps.organizador.adapters.TareasRecyclerViewAdapter) recyclerViewTareas.getAdapter();
+                    TareasRecyclerViewAdapter.notifyItemChanged(indexAdpter, tarea);
+                    TareasRecyclerViewAdapter.notifyDataSetChanged();
 
 
                     alertDialog.dismiss();
