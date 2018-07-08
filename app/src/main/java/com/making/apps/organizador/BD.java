@@ -194,13 +194,7 @@ public class BD extends SQLiteOpenHelper {
      */
     public void actualizarTareas(int id_tarea, String nombre, String descripcion, String estado, int id_usuario) {
         SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues datos = new ContentValues();
-        datos.put(DB_COLUMNA_TAREAS_NOMBRE, nombre);
-        datos.put(DB_COLUMNA_TAREAS_DESCRIPCION, descripcion);
-        datos.put(DB_COLUMNA_TAREAS_ESTADO, estado);
-        db.update(DB_TABLA_TAREAS, datos, "id=" + id_tarea + " and id_usuario=" + id_usuario, null);
-
-        Log.e("d", "actualizada");
+        db.execSQL("update tareas set nombre='" + nombre + "', descripcion='" + descripcion + "', estado='" + estado + "' where id=" + id_tarea + " and id_usuario=" + id_usuario + ";");
     }
 
 
