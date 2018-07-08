@@ -19,9 +19,10 @@ import java.util.List;
 public class TareasRecyclerViewAdapter extends RecyclerView.Adapter<TareasRecyclerViewAdapter.TareasViewHolder> implements Filterable {
 
     private List<tareas> tareasList;
-    private List<tareas> tareasListFull;
+    public List<tareas> tareasListFull;
     private TareasActivity activity;
     private RecyclerView recyclerViewTareas;
+
 
     public TareasRecyclerViewAdapter(List<tareas> tareasList, TareasActivity activity, RecyclerView recyclerViewTareas) {
         this.tareasList = tareasList;

@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button login = findViewById(R.id.boton_login);
         Button registrarse = findViewById(R.id.boton_registro);
+        
 
         baseDatos = new BD(this);
 

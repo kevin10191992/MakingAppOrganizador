@@ -255,6 +255,7 @@ public class TareasActivity extends AppCompatActivity {
                         tareasList.add(nuevaTarea);
                         TareasRecyclerViewAdapter.notifyDataSetChanged();
 
+
                         alertDialog.dismiss();
                         baseDatos = null;
                         Toast.makeText(view.getContext(), R.string.text_tarea_creada, Toast.LENGTH_SHORT).show();
@@ -405,5 +406,6 @@ public class TareasActivity extends AppCompatActivity {
 
 
     }
+
 
 }
