@@ -16,7 +16,7 @@
     <string name="text_usuario_creado">Registro Exitoso</string>
     <string name="text_error_sesion">Usuario o clave incorrectos</string>
     <string name="text_longitud_minima">Longitud minima 8 caracteres</string>
-    <string name="texot_iniciar_con">Tambien puedes iniciar con:</string>
+    <string name="texot_iniciar_con">Tambien puedes...</string>
 
 
     <!-- Strings related to Shared preferences login -->
@@ -54,7 +54,6 @@
 
     <string name="facebook_app_id">1654069211382233</string>
     <string name="fb_login_protocol_scheme">fb1654069211382233</string>
-
 
 
 </resources>

@@ -85,13 +85,14 @@ public class MainActivity extends AppCompatActivity {
                             String usuariobd = currentProfile.getName();
                             SplashActivity.guardarPreferences(MainActivity.this, id_usuario, usuariobd);
                             startActivity(new Intent(MainActivity.this, TareasActivity.class));
+                            profileTracker.stopTracking();
                             MainActivity.this.finish();
+
                         }
 
 
                     }
                 };
-
                 profileTracker.startTracking();
 
 
