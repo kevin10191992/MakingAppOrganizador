@@ -12,9 +12,12 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.Profile;
+import com.facebook.ProfileTracker;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.making.apps.organizador.pojos.usuario;
@@ -29,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
     private TextInputEditText clave;
     private BD baseDatos;
     private CallbackManager callbackManager;
+    private AccessTokenTracker accessTokenTracker;
+    private ProfileTracker profileTracker;
 
 
     @Override
@@ -65,14 +70,32 @@ public class MainActivity extends AppCompatActivity {
         LoginButton loginButton = findViewById(R.id.login_button);
         loginButton.setReadPermissions("email");
 
+
         // Callback registration
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 // App code
                 AccessToken accessToken = AccessToken.getCurrentAccessToken();
-                boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
-                Log.e("d", "estado inicado " + isLoggedIn);
+                final int id_usuario = Integer.parseInt(accessToken.getUserId().substring(0,10));
+                profileTracker = new ProfileTracker() {
+                    @Override
+                    protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
+                        if (currentProfile != null) {
+                            String usuariobd = currentProfile.getName();
+                            Log.e("a", usuariobd + "");
+                            SplashActivity.guardarPreferences(MainActivity.this, id_usuario, usuariobd);
+                            startActivity(new Intent(MainActivity.this, TareasActivity.class));
+                            MainActivity.this.finish();
+                        }
+
+
+                    }
+                };
+
+                profileTracker.startTracking();
+
+
             }
 
             @Override
@@ -194,6 +217,8 @@ public class MainActivity extends AppCompatActivity {
         callbackManager.onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+
 }
 
 

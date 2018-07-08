@@ -30,6 +30,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.login.LoginManager;
 import com.making.apps.organizador.adapters.TareasRecyclerViewAdapter;
 import com.making.apps.organizador.pojos.tareas;
 
@@ -133,6 +134,9 @@ public class TareasActivity extends AppCompatActivity {
                 break;
             case R.id.action_cerrar_sesion:
                 //se elimina el share preferences para cerrar sesion local
+                if (SplashActivity.validasesionfacebook()) {
+                    LoginManager.getInstance().logOut();
+                }
                 SplashActivity.borrarPreferences(TareasActivity.this);
                 break;
 
