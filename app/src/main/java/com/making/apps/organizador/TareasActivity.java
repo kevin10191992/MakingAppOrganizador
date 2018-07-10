@@ -255,8 +255,12 @@ public class TareasActivity extends AppCompatActivity {
                         tareasList.add(nuevaTarea);
                         TareasRecyclerViewAdapter.notifyDataSetChanged();
 
-
                         alertDialog.dismiss();
+
+                        //se actualiza el total de registros para el filtro
+                        TareasRecyclerViewAdapter.tareasListFull.clear();
+                        TareasRecyclerViewAdapter.tareasListFull.addAll(tareasList);
+
                         baseDatos = null;
                         Toast.makeText(view.getContext(), R.string.text_tarea_creada, Toast.LENGTH_SHORT).show();
 
@@ -348,8 +352,12 @@ public class TareasActivity extends AppCompatActivity {
                     //se notifica el cambio global
                     TareasRecyclerViewAdapter.notifyDataSetChanged();
 
-
                     alertDialog.dismiss();
+
+                    //se actualiza el total de registros para el filtro
+                    TareasRecyclerViewAdapter.tareasListFull.clear();
+                    TareasRecyclerViewAdapter.tareasListFull.addAll(tareasList);
+
                     baseDatos = null;
                     Toast.makeText(view.getContext(), R.string.text_tarea_actualizada, Toast.LENGTH_SHORT).show();
 
@@ -385,6 +393,10 @@ public class TareasActivity extends AppCompatActivity {
 
 
                         dialogInterface.dismiss();
+                        //se actualiza el total de registros para el filtro
+                        TareasRecyclerViewAdapter.tareasListFull.clear();
+                        TareasRecyclerViewAdapter.tareasListFull.addAll(tareasList);
+
                     }
                 })
                         .setNegativeButton(activity.getString(R.string.texto_cancelar), new DialogInterface.OnClickListener() {

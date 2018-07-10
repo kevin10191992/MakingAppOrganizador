@@ -31,6 +31,7 @@ public class TareasRecyclerViewAdapter extends RecyclerView.Adapter<TareasRecycl
         this.recyclerViewTareas = recyclerViewTareas;
     }
 
+
     @NonNull
     @Override
     public TareasViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -84,6 +85,7 @@ public class TareasRecyclerViewAdapter extends RecyclerView.Adapter<TareasRecycl
 
             FilterResults filterResults = new FilterResults();
             filterResults.values = listafiltrada;
+            filterResults.count = listafiltrada.size();
             return filterResults;
         }
 
@@ -110,6 +112,5 @@ public class TareasRecyclerViewAdapter extends RecyclerView.Adapter<TareasRecycl
 
         }
     }
-
 
 }
